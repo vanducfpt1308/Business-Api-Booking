@@ -44,7 +44,6 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(token);
-
     }
 
     @PostMapping("/auth/register")
@@ -56,12 +55,7 @@ public class UserController {
         }catch (Exception e) {
             System.out.println("Lỗi không register được acount!");
             e.printStackTrace();
-
         }
         return Status.SUCCESS;
-
     }
-
-
-
 }
