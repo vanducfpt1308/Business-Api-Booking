@@ -21,6 +21,9 @@ public class BookingDetailController {
         BookingDetail bk = bookingDetailService.findbyId(id);
         bk.setStatus("Đã bị huỷ");
         bookingDetailService.save(bk);
-        return ResponseEntity.ok(ResponseDTO.builder().messageCode("200").messageName("SUCCESS").data(bk).build());
+        return ResponseEntity.ok(ResponseDTO.builder()
+                .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
+                .messageName(ResponeCustom.MESSAGE_NAME_SUCCESS)
+                .data(bk).build());
     }
 }
