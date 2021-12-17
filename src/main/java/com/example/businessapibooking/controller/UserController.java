@@ -1,7 +1,7 @@
 package com.example.businessapibooking.controller;
 
 
-import com.example.businessapibooking.Utils.HashUtil;
+import com.example.businessapibooking.utils.HashUtil;
 import com.example.businessapibooking.config.JwtTokenUtil;
 import com.example.businessapibooking.dto.UserDTO;
 import com.example.businessapibooking.entity.Role;

@@ -1,4 +1,4 @@
-package com.example.businessapibooking.Utils;
+package com.example.businessapibooking.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
