@@ -25,7 +25,7 @@ public class BookingDetail {
 
     private String note;
 
-    private String status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "service_id")

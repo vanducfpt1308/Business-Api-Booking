@@ -37,13 +37,17 @@ public class UserController {
 
 
     @PostMapping("auth/login")
-    public ResponseEntity<String> login(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO){
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDTO.getUsername(), userDTO.getPassword()));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDTO.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(token);
+        Users user = userRepo.findByUsername(userDTO.getUsername());
+        UserDTO u = new UserDTO();
+        u.setToken(token);
+        u.setRole(user.getRole().getRole());
+        return ResponseEntity.ok(u);
     }
 
     @PostMapping("/auth/register")

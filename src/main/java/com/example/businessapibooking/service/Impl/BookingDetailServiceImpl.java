@@ -6,6 +6,8 @@ import com.example.businessapibooking.service.BookingDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookingDetailServiceImpl implements BookingDetailService {
     @Autowired
@@ -20,5 +22,10 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     @Override
     public BookingDetail save(BookingDetail bookingDetail) {
         return bookingDetailRepo.save(bookingDetail);
+    }
+
+    @Override
+    public List<BookingDetail> getAllByStatus() {
+        return bookingDetailRepo.findByStatus();
     }
 }
