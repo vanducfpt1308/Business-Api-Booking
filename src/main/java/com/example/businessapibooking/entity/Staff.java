@@ -53,5 +53,5 @@ public class Staff {
 
     @JsonIgnore
     @OneToMany(mappedBy = "staff")
-    private List<Booking> bookings;
+    private List<BookingDetail> bookingDetails;
 }

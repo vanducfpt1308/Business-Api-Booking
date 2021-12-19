@@ -21,15 +21,20 @@ public class BookingDetail {
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date time_end;
 
-    private String address;
+    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
+    private Date datebooking;
 
     private String note;
 
-    private String status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "service_id")
     private ServiceCustomer serviceCustomer;
+
+    @ManyToOne
+    @JoinColumn(name = "id_staff")
+    private Staff staff;
 
     @ManyToOne
     @JoinColumn(name="booking_id")
