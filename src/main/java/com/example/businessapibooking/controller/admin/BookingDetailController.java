@@ -15,6 +15,12 @@ public class BookingDetailController {
     BookingDetailService bookingDetailService;
 
     //huy lich kham
+    @PutMapping("/abc")
+    public String abc() {
+        return "abc";
+    }
+
+    //huy lich kham
     @PutMapping("/cancel/{id}")
     public ResponseEntity<ResponseDTO<?>> cancel(@PathVariable("id") Integer id) {
 
