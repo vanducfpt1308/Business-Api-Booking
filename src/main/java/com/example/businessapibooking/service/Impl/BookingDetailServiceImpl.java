@@ -25,7 +25,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     }
 
     @Override
-    public List<BookingDetail> getAllByStatus() {
-        return bookingDetailRepo.findByStatus();
+    public List<BookingDetail> getAllByStatus(Integer stt) {
+        return bookingDetailRepo.findByStatus(stt);
     }
 }

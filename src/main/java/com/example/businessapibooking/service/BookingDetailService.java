@@ -7,6 +7,6 @@ import java.util.List;
 public interface BookingDetailService {
     BookingDetail findbyId(Integer id);
     BookingDetail save(BookingDetail bookingDetail);
-    List<BookingDetail> getAllByStatus();
+    List<BookingDetail> getAllByStatus(Integer stt);
 
 }
