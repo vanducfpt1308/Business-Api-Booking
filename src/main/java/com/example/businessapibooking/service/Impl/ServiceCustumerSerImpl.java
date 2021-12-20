@@ -16,4 +16,9 @@ public class ServiceCustumerSerImpl implements ServiceCustumerService {
     public List<ServiceCustomer> getAll() {
         return serviceCustumerRepo.findAll();
     }
+
+    @Override
+    public ServiceCustomer save(ServiceCustomer serviceCustomer) {
+        return serviceCustumerRepo.save(serviceCustomer);
+    }
 }

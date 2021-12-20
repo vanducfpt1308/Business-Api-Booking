@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ServiceCustumerService {
     List<ServiceCustomer> getAll();
+    ServiceCustomer save(ServiceCustomer serviceCustomer);
 }
