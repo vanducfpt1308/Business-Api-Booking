@@ -15,16 +15,18 @@ import org.springframework.web.bind.annotation.*;
 public class BookingDetailController {
     @Autowired
     BookingDetailService bookingDetailService;
-    // select lich kham theo status
-    @GetMapping("/allbooking")
-    public ResponseEntity<ResponseDTO<?>> getAllBookingStatus(){
+    // select lich kham stt =1
+    @GetMapping("/allbooking/{stt}")
+    public ResponseEntity<ResponseDTO<?>> getAllBookingStatus(@PathVariable("stt")Integer stt){
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
                 .messageName(ResponeCustom.MESSAGE_NAME_SUCCESS)
-                .data(bookingDetailService.getAllByStatus())
+                .data(bookingDetailService.getAllByStatus(stt))
                 .build());
 
     }
+
+
 
     //huy lich kham
     @PutMapping("/abc")
@@ -37,7 +39,7 @@ public class BookingDetailController {
     public ResponseEntity<ResponseDTO<?>> cancel(@PathVariable("id") Integer id) {
 
         BookingDetail bk = bookingDetailService.findbyId(id);
-        bk.setStatus(2);
+        bk.setStatus(3);
         bookingDetailService.save(bk);
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
