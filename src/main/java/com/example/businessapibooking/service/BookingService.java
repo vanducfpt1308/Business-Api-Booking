@@ -1,6 +1,7 @@
 package com.example.businessapibooking.service;
 
 import com.example.businessapibooking.entity.Booking;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.domain.Page;
 
 import javax.persistence.OrderBy;
@@ -30,4 +31,6 @@ public interface BookingService {
     Page<Booking> findPage(int numberSkip, int limit, List<OrderBy> orderBys);
 
     List<Booking> findAll();
+
+    Booking create(JsonNode bookingdata);
 }

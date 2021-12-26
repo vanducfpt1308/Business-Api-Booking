@@ -1,19 +1,28 @@
 package com.example.businessapibooking.service.Impl;
 
+import com.example.businessapibooking.entity.BookingDetail;
+import com.example.businessapibooking.repository.BookingDetailRepo;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.example.businessapibooking.entity.Booking;
 import com.example.businessapibooking.repository.BookingRepository;
 import com.example.businessapibooking.service.BookingService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
     @Autowired
     BookingRepository repository;
+
+    @Autowired
+    BookingDetailRepo bookingDetailRepo;
 
     @Override
     public List<Booking> findByCustomer(Integer key) {
@@ -73,5 +82,17 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> findAll() {
         return null;
+    }
+
+    @Override
+    public Booking create(JsonNode bookingdata) {
+        ObjectMapper mapper = new ObjectMapper();
+        Booking booking = mapper.convertValue(bookingdata, Booking.class);
+        repository.save(booking);
+        TypeReference<List<BookingDetail>> type = new TypeReference<List<BookingDetail>>() {};
+        List<BookingDetail> details = mapper.convertValue(bookingdata.get("bookingDetails"),type)
+                .stream().peek(d->d.setBooking(booking)).collect(Collectors.toList());
+        bookingDetailRepo.saveAll(details);
+        return booking;
     }
 }
