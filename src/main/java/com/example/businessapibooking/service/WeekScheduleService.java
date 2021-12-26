@@ -1,10 +1,12 @@
 package com.example.businessapibooking.service;
 
 import com.example.businessapibooking.entity.WeekSchedule;
+import com.example.businessapibooking.repository.DayScheduleRepo;
 import org.springframework.data.domain.Page;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.Map;
 
 public interface WeekScheduleService {
 
@@ -12,7 +14,7 @@ public interface WeekScheduleService {
 
     WeekSchedule findById(Integer id);
 
-    List<WeekSchedule> findByStaffId(Integer key);
+    List<WeekSchedule> findByStaffIdAndStatus(Map map);
 
     List<WeekSchedule> findAllById(List<Integer> ids);
 

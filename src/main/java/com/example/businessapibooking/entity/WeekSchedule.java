@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "week_schedules")
-public class WeekSchedule {
+public class WeekSchedule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -17,7 +18,7 @@ public class WeekSchedule {
     @Enumerated(value = EnumType.STRING)
     private DayOfWeek dayOfWeek;
 
-    private boolean status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name="STAFFID")

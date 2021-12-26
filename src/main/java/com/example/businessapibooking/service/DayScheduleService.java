@@ -1,13 +1,17 @@
 package com.example.businessapibooking.service;
 
 import com.example.businessapibooking.entity.DaySchedule;
+import com.example.businessapibooking.repository.DayScheduleRepo;
 import org.springframework.data.domain.Page;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.Map;
 
 public interface DayScheduleService {
     List<DaySchedule> findAll();
+
+    List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status);
 
     DaySchedule findById(Integer id);
 

@@ -1,5 +1,6 @@
 package com.example.businessapibooking.service;
 
+import com.example.businessapibooking.entity.Role;
 import com.example.businessapibooking.entity.Staff;
 import org.springframework.data.domain.Page;
 
@@ -10,7 +11,11 @@ import java.util.List;
 public interface StaffService {
     Staff findById(Integer id);
 
+    List<Staff> findAll();
+
     List<Staff> findAll(List<Integer> ids);
+
+    List<Staff> findByUserRole(Integer role);
 
     Staff save(Staff obj);
 
@@ -30,5 +35,4 @@ public interface StaffService {
 
     Page<Staff> findPage(int numberSkip, int limit, List<OrderBy> orderBys);
 
-    List<Staff> findAll();
 }

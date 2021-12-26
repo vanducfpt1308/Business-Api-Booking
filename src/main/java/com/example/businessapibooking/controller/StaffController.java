@@ -33,4 +33,31 @@ public class StaffController {
         }
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
+
+    @RequestMapping(value = {"/findByUserRole"}, method = RequestMethod.POST)
+    public ResponseEntity<?> findByUserRole(@RequestBody Integer role) {
+        long startTime = System.currentTimeMillis();
+        List<Staff> listStaff = new ArrayList<>();
+        try {
+            listStaff = service.findByUserRole(role);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(listStaff, HttpStatus.OK);
+    }
+    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
+        long startTime = System.currentTimeMillis();
+        Staff staff = new Staff();
+        try {
+            staff = service.findById(id);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(staff, HttpStatus.OK);
+    }
 }

@@ -8,12 +8,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DayScheduleServiceImpl implements DayScheduleService {
     @Autowired
     DayScheduleRepo dayScheduleRepo;
+
+    @Override
+    public List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status) {
+        return dayScheduleRepo.findByWeekScheduleIdAndStatus(id, status);
+    }
 
     @Override
     public List<DaySchedule> findAll() {

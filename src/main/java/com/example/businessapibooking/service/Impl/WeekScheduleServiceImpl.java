@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class WeekScheduleServiceImpl implements WeekScheduleService {
@@ -16,8 +18,14 @@ public class WeekScheduleServiceImpl implements WeekScheduleService {
     WeekScheduleRepo weekScheduleRepo;
 
     @Override
-    public List<WeekSchedule> findByStaffId(Integer key) {
-        return weekScheduleRepo.findByStaff_Id(key);
+    public List<WeekSchedule> findByStaffIdAndStatus(Map map) {
+        List<WeekSchedule> lst = new ArrayList<>();
+        if (map != null) {
+            Integer key = (Integer) map.get("STAFF_ID");
+            Integer status = (Integer) map.get("STATUS");
+            lst = weekScheduleRepo.findByStaffIdAndStatus(key, status);
+        }
+        return lst;
     }
 
     @Override

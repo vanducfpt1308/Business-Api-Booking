@@ -19,6 +19,11 @@ public class StaffServiceImpl implements StaffService {
     StaffRepository staffRepository;
 
     @Override
+    public List<Staff> findByUserRole(Integer role) {
+        return staffRepository.findByUserRole(role);
+    }
+
+    @Override
     public Staff findById(Integer id) {
         Staff staff = new Staff();
         try {
