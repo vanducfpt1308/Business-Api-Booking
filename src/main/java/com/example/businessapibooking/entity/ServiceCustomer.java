@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,11 +25,13 @@ public class ServiceCustomer {
 
     private String price;
 
-    private String photo;
-
     private String description;
 
     private String time_examination;
+
+    @Transient
+    @JsonIgnore
+    private MultipartFile photo;
 
     @JsonIgnore
     @OneToMany(mappedBy = "serviceCustomer")
