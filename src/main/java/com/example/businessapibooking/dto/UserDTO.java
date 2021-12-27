@@ -12,4 +12,12 @@ public class UserDTO {
     private String password;
     private String role;
     private String token;
+    private Integer id;
+    private String email;
+    private String photo;
+    private String fullName;
+    private String address;
+    private Integer phone;
+    private boolean isInsured;
+    private String gender;
 }

@@ -4,6 +4,7 @@ package com.example.businessapibooking.entity;
 import com.example.businessapibooking.config.Constants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.data.relational.core.sql.In;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +14,8 @@ import java.util.Date;
 @Table(name = "Booking_Details")
 public class BookingDetail {
     @Id
-    private Integer bookingid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date time_start;

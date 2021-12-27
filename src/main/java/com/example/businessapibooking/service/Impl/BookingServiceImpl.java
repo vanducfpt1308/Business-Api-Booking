@@ -1,7 +1,12 @@
 package com.example.businessapibooking.service.Impl;
 
+import com.example.businessapibooking.dto.BookingDTO;
 import com.example.businessapibooking.entity.BookingDetail;
+import com.example.businessapibooking.entity.ServiceCustomer;
+import com.example.businessapibooking.entity.Staff;
 import com.example.businessapibooking.repository.BookingDetailRepo;
+import com.example.businessapibooking.repository.ServiceCustumerRepo;
+import com.example.businessapibooking.repository.StaffRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.example.businessapibooking.entity.Booking;
 import com.example.businessapibooking.repository.BookingRepository;
@@ -23,6 +28,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     BookingDetailRepo bookingDetailRepo;
+
+    @Autowired
+    StaffRepository staffRepository;
+    @Autowired
+    ServiceCustumerRepo serviceCustumerRepo;
 
     @Override
     public List<Booking> findByCustomer(Integer key) {
@@ -87,12 +97,22 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking create(JsonNode bookingdata) {
         ObjectMapper mapper = new ObjectMapper();
-        Booking booking = mapper.convertValue(bookingdata, Booking.class);
+        BookingDTO bookingDTO = mapper.convertValue(bookingdata, BookingDTO.class);
+        Booking booking = new Booking();
+        booking.setCustomer(bookingDTO.getCustomer());
         repository.save(booking);
-        TypeReference<List<BookingDetail>> type = new TypeReference<List<BookingDetail>>() {};
-        List<BookingDetail> details = mapper.convertValue(bookingdata.get("bookingDetails"),type)
-                .stream().peek(d->d.setBooking(booking)).collect(Collectors.toList());
-        bookingDetailRepo.saveAll(details);
+        if (bookingDTO != null) {
+            BookingDetail bookingDetail = new BookingDetail();
+            bookingDetail.setBooking(booking);
+            bookingDetail.setStatus(0);
+            bookingDetail.setDatebooking(bookingDTO.getDateBooking());
+            bookingDetail.setTime_start(bookingDTO.getTimeStart());
+            bookingDetail.setTime_end(bookingDTO.getTimeEnd());
+            bookingDetail.setNote(bookingDTO.getNote());
+            bookingDetail.setStaff(bookingDTO.getStaff());
+            bookingDetail.setServiceCustomer(bookingDTO.getServiceCustomer());
+            bookingDetailRepo.save(bookingDetail);
+        }
         return booking;
     }
 }

@@ -43,8 +43,17 @@ public class UserController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         Users user = userRepo.findByUsername(userDTO.getUsername());
         UserDTO u = new UserDTO();
-        u.setToken(token);
-        u.setRole(user.getRole().getRole());
+        if(user.getRole().getRole().equals("USSER")){
+            u.setToken(token);
+            u.setPhone(user.getCustomer().getPhone());
+            u.setRole(user.getRole().getRole());
+            u.setEmail(user.getCustomer().getEmail());
+            u.setPhoto(user.getCustomer().getPhoto());
+            u.setGender(user.getCustomer().getGender());
+            u.setEmail(user.getCustomer().getEmail());
+            u.setFullName(user.getCustomer().getFullName());
+        }
+
         return ResponseEntity.ok(u);
     }
 
