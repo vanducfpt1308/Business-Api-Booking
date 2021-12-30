@@ -17,11 +17,9 @@ public class BookingDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date time_start;
+    private String time_start;
 
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date time_end;
+    private String time_end;
 
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date datebooking;

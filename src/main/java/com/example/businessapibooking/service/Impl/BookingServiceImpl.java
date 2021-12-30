@@ -1,13 +1,10 @@
 package com.example.businessapibooking.service.Impl;
 
-import com.example.businessapibooking.dto.BookingDTO;
+import com.example.businessapibooking.dto.BookingRequest;
 import com.example.businessapibooking.entity.BookingDetail;
-import com.example.businessapibooking.entity.ServiceCustomer;
-import com.example.businessapibooking.entity.Staff;
 import com.example.businessapibooking.repository.BookingDetailRepo;
 import com.example.businessapibooking.repository.ServiceCustumerRepo;
 import com.example.businessapibooking.repository.StaffRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.example.businessapibooking.entity.Booking;
 import com.example.businessapibooking.repository.BookingRepository;
 import com.example.businessapibooking.service.BookingService;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -97,20 +93,20 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking create(JsonNode bookingdata) {
         ObjectMapper mapper = new ObjectMapper();
-        BookingDTO bookingDTO = mapper.convertValue(bookingdata, BookingDTO.class);
+        BookingRequest bookingRequest = mapper.convertValue(bookingdata, BookingRequest.class);
         Booking booking = new Booking();
-        booking.setCustomer(bookingDTO.getCustomer());
+        BookingDetail bookingDetail = new BookingDetail();
+        booking.setCustomer(bookingRequest.getCustomer());
         repository.save(booking);
-        if (bookingDTO != null) {
-            BookingDetail bookingDetail = new BookingDetail();
+        if (bookingRequest != null) {
             bookingDetail.setBooking(booking);
-            bookingDetail.setStatus(0);
-            bookingDetail.setDatebooking(bookingDTO.getDateBooking());
-            bookingDetail.setTime_start(bookingDTO.getTimeStart());
-            bookingDetail.setTime_end(bookingDTO.getTimeEnd());
-            bookingDetail.setNote(bookingDTO.getNote());
-            bookingDetail.setStaff(bookingDTO.getStaff());
-            bookingDetail.setServiceCustomer(bookingDTO.getServiceCustomer());
+            bookingDetail.setStatus(1);
+            bookingDetail.setDatebooking(bookingRequest.getDateBooking());
+            bookingDetail.setTime_start(bookingRequest.getTimeStart());
+            bookingDetail.setTime_end(bookingRequest.getTimeEnd());
+            bookingDetail.setNote(bookingRequest.getNote());
+            bookingDetail.setStaff(bookingRequest.getStaff());
+            bookingDetail.setServiceCustomer(bookingRequest.getServiceCustomer());
             bookingDetailRepo.save(bookingDetail);
         }
         return booking;

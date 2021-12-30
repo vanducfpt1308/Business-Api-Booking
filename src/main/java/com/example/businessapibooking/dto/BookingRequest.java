@@ -16,14 +16,14 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingDTO {
+public class BookingRequest {
     private Customer customer;
     private Staff staff;
     private ServiceCustomer serviceCustomer;
 
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date dateBooking;
-    private Date timeEnd;
-    private Date timeStart;
+    private String timeEnd;
+    private String timeStart;
     private String note;
 }

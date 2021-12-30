@@ -7,5 +7,6 @@ public interface Constants {
     interface DATE_FORMAT {
         String DATE_TIME = "dd-MM-yyyy HH:mm:ss";
         String DB_DATE_TIME = "dd-MM-yyyy HH24:mi:ss";
+        String DATE = "dd-MM-yyyy";
     }
 }
