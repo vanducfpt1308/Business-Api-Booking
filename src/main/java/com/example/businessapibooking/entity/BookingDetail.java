@@ -21,8 +21,8 @@ public class BookingDetail {
 
     private String time_end;
 
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date datebooking;
+    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE)
+    private Date dateBooking;
 
     private String note;
 

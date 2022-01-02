@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,6 +40,21 @@ public class DayScheduleController {
         List<DaySchedule> lst = new ArrayList<>();
         try {
             lst = service.findByWeekScheduleIdAndStatus(id, true);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/findByStaffIdAndStatus"}, method = RequestMethod.POST)
+    public ResponseEntity<?> findByStaff(@RequestBody Map map) {
+        long startTime = System.currentTimeMillis();
+        List<DaySchedule> lst = new ArrayList<>();
+        try {
+            lst = service.findByStaffAndWeekSchedule(map);
+            LOGGER.info("getAll :" + map);
         } catch (Exception e) {
             throw e;
         } finally {

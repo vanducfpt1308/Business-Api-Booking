@@ -101,7 +101,7 @@ public class BookingServiceImpl implements BookingService {
         if (bookingRequest != null) {
             bookingDetail.setBooking(booking);
             bookingDetail.setStatus(1);
-            bookingDetail.setDatebooking(bookingRequest.getDateBooking());
+            bookingDetail.setDateBooking(bookingRequest.getDateBooking());
             bookingDetail.setTime_start(bookingRequest.getTimeStart());
             bookingDetail.setTime_end(bookingRequest.getTimeEnd());
             bookingDetail.setNote(bookingRequest.getNote());

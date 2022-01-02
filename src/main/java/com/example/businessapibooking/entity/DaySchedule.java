@@ -5,7 +5,7 @@ import com.example.businessapibooking.config.Constants;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Time;
 
 
 @Entity
@@ -16,12 +16,12 @@ public class DaySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date startTime;
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date endTime;
 
-    private boolean status;
+    private Time startTime;
+
+    private Time endTime;
+
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "week_schedule_id")

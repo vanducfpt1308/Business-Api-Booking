@@ -1,6 +1,7 @@
 package com.example.businessapibooking.service.Impl;
 
 import com.example.businessapibooking.entity.DaySchedule;
+import com.example.businessapibooking.entity.WeekSchedule;
 import com.example.businessapibooking.repository.DayScheduleRepo;
 import com.example.businessapibooking.service.DayScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,18 @@ public class DayScheduleServiceImpl implements DayScheduleService {
     @Override
     public List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status) {
         return dayScheduleRepo.findByWeekScheduleIdAndStatus(id, status);
+    }
+
+    @Override
+    public List<DaySchedule> findByStaffAndWeekSchedule(Map map) {
+        List<DaySchedule> lst = new ArrayList<>();
+        if (map != null) {
+            Integer key = (Integer) map.get("STAFF_ID");
+            String day = (String) map.get("DAY");
+            Integer status = (Integer) map.get("STATUS");
+            lst = dayScheduleRepo.findByStaffAndWeekSchedule(key, day, status);
+        }
+        return lst;
     }
 
     @Override

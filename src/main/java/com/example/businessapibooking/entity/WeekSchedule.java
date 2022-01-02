@@ -15,8 +15,7 @@ public class WeekSchedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Enumerated(value = EnumType.STRING)
-    private DayOfWeek dayOfWeek;
+    private String dayOfWeek;
 
     private Integer status;
 

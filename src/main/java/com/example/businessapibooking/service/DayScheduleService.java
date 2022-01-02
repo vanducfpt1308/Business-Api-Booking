@@ -13,6 +13,8 @@ public interface DayScheduleService {
 
     List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status);
 
+    List<DaySchedule> findByStaffAndWeekSchedule(Map map);
+
     DaySchedule findById(Integer id);
 
     List<DaySchedule> findAllById(List<Integer> ids);
