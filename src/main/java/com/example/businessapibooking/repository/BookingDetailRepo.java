@@ -11,5 +11,4 @@ import java.util.List;
 public interface BookingDetailRepo extends JpaRepository<BookingDetail,Integer> {
      @Query("SELECT u FROM BookingDetail u WHERE u.status = :stt")
      List<BookingDetail> findByStatus(Integer stt);
-
 }

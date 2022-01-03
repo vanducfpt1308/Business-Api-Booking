@@ -5,6 +5,10 @@ import com.example.businessapibooking.entity.ServiceCustomer;
 import java.util.List;
 
 public interface ServiceCustumerService {
+
     List<ServiceCustomer> getAll();
+
     ServiceCustomer save(ServiceCustomer serviceCustomer);
+
+    void delete(Integer key);
 }

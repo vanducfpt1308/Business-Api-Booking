@@ -23,7 +23,7 @@ public class ServiceCustumerController {
     ServiceCustumerService custumerService;
 
     @GetMapping("/allservice")
-    public ResponseEntity<ResponseDTO<?>> getAllService(){
+    public ResponseEntity<ResponseDTO<?>> getAllService() {
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
                 .messageName(ResponeCustom.MESSAGE_NAME_SUCCESS)
@@ -33,7 +33,7 @@ public class ServiceCustumerController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseDTO<?>> updateService(@RequestBody ServiceCustomer serviceCustomer){
+    public ResponseEntity<ResponseDTO<?>> updateService(@RequestBody ServiceCustomer serviceCustomer) {
 
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
@@ -43,17 +43,16 @@ public class ServiceCustumerController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ResponseDTO<?>> saveService(@RequestBody @ModelAttribute ServiceCustomer serviceCustomer, HttpServletRequest request){
+    public ResponseEntity<ResponseDTO<?>> saveService(@RequestBody ServiceCustomer serviceCustomer, HttpServletRequest request) {
 
-        ServiceCustomer sv =  custumerService.save(serviceCustomer);
-        saveImageForService(sv,request);
-
+        ServiceCustomer sv = custumerService.save(serviceCustomer);
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
                 .messageName(ResponeCustom.MESSAGE_NAME_SUCCESS)
                 .data(sv)
                 .build());
     }
+
     //lưu ảnh vào thư mục
     public void saveImageForService(ServiceCustomer serviceCustomer, HttpServletRequest request) {
 
@@ -74,8 +73,8 @@ public class ServiceCustumerController {
         }
     }
 
-//    @DeleteMapping("/delete/{id}")
-//    private void delete(@PathVariable("id") Integer id) {
-//        custumerService.deleteById(id);
-//    }
+    @DeleteMapping("/delete/{id}")
+    private void delete(@PathVariable("id") Integer id) {
+        custumerService.delete(id);
+    }
 }

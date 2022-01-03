@@ -15,6 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +30,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     StaffRepository staffRepository;
+
     @Autowired
     ServiceCustumerRepo serviceCustumerRepo;
 
@@ -94,6 +98,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking create(JsonNode bookingdata) {
         ObjectMapper mapper = new ObjectMapper();
         BookingRequest bookingRequest = mapper.convertValue(bookingdata, BookingRequest.class);
+        bookingRequest.setDateBooking(bookingRequest.getDateBooking()+" 07:00:00");
         Booking booking = new Booking();
         BookingDetail bookingDetail = new BookingDetail();
         booking.setCustomer(bookingRequest.getCustomer());
@@ -101,7 +106,15 @@ public class BookingServiceImpl implements BookingService {
         if (bookingRequest != null) {
             bookingDetail.setBooking(booking);
             bookingDetail.setStatus(1);
-            bookingDetail.setDateBooking(bookingRequest.getDateBooking());
+
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(bookingRequest.getDateBooking());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            System.out.println(date);
+            bookingDetail.setDateBooking(date);
             bookingDetail.setTime_start(bookingRequest.getTimeStart());
             bookingDetail.setTime_end(bookingRequest.getTimeEnd());
             bookingDetail.setNote(bookingRequest.getNote());

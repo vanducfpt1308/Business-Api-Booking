@@ -12,6 +12,12 @@ import java.util.List;
 public class ServiceCustumerSerImpl implements ServiceCustumerService {
     @Autowired
     ServiceCustumerRepo serviceCustumerRepo;
+
+    @Override
+    public void delete(Integer key) {
+        serviceCustumerRepo.deleteById(key);
+    }
+
     @Override
     public List<ServiceCustomer> getAll() {
         return serviceCustumerRepo.findAll();

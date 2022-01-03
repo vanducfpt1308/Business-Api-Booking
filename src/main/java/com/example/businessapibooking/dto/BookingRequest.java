@@ -20,9 +20,7 @@ public class BookingRequest {
     private Customer customer;
     private Staff staff;
     private ServiceCustomer serviceCustomer;
-
-    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
-    private Date dateBooking;
+    private String dateBooking;
     private String timeEnd;
     private String timeStart;
     private String note;
