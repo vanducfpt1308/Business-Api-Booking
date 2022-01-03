@@ -8,6 +8,7 @@ import com.example.businessapibooking.repository.StaffRepository;
 import com.example.businessapibooking.entity.Booking;
 import com.example.businessapibooking.repository.BookingRepository;
 import com.example.businessapibooking.service.BookingService;
+import com.example.businessapibooking.service.SendMailService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class BookingServiceImpl implements BookingService {
     StaffRepository staffRepository;
     @Autowired
     ServiceCustumerRepo serviceCustumerRepo;
+    @Autowired
+    SendMailService sendMailService;
 
     @Override
     public List<Booking> findByCustomer(Integer key) {
@@ -107,8 +110,11 @@ public class BookingServiceImpl implements BookingService {
             bookingDetail.setNote(bookingRequest.getNote());
             bookingDetail.setStaff(bookingRequest.getStaff());
             bookingDetail.setServiceCustomer(bookingRequest.getServiceCustomer());
+
             bookingDetailRepo.save(bookingDetail);
+
         }
+        sendMailService.sendSimpleEmail(bookingRequest.getNote());
         return booking;
     }
 }
