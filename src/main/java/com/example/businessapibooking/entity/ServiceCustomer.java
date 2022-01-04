@@ -27,7 +27,7 @@ public class ServiceCustomer {
 
     private String description;
 
-    private String time_examination;
+    private String timeExamination;
 
     @Transient
     @JsonIgnore

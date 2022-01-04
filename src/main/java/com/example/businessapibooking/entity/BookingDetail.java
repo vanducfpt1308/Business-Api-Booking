@@ -17,6 +17,12 @@ public class BookingDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String fullName;
+
+    private Integer phone;
+
+    private String Email;
+
     private String time_start;
 
     private String time_end;

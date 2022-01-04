@@ -43,8 +43,7 @@ public class ServiceCustumerController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ResponseDTO<?>> saveService(@RequestBody ServiceCustomer serviceCustomer, HttpServletRequest request) {
-
+    public ResponseEntity<ResponseDTO<?>> saveService(@RequestBody ServiceCustomer serviceCustomer) {
         ServiceCustomer sv = custumerService.save(serviceCustomer);
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
