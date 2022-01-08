@@ -19,8 +19,14 @@ public class DayScheduleServiceImpl implements DayScheduleService {
     DayScheduleRepo dayScheduleRepo;
 
     @Override
-    public List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status) {
-        return dayScheduleRepo.findByWeekScheduleIdAndStatus(id, status);
+    public List<DaySchedule> findByWeekScheduleIdAndStatus(Map map) {
+        List<DaySchedule> lst = new ArrayList<>();
+        if (map != null) {
+            Integer key = (Integer) map.get("WEEK_ID");
+            Integer status = (Integer) map.get("STATUS");
+            lst = dayScheduleRepo.findByWeekScheduleIdAndStatus(key, status);
+        }
+        return lst;
     }
 
     @Override

@@ -65,12 +65,14 @@ public class UserController {
             u.setUsername(user.getUsername());
             u.setRole(user.getRole().getRole());
             u.setId(user.getCustomer().getId());
+            LOGGER.info("user:" + u);
         } else {
             u.setToken(token);
             u.setRole(user.getRole().getRole());
             u.setUsername(user.getUsername());
+            LOGGER.info("user:" + u);
         }
-
+        LOGGER.info("user:" + u);
         return ResponseEntity.ok(u);
     }
 

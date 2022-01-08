@@ -11,7 +11,7 @@ import java.util.Map;
 public interface DayScheduleService {
     List<DaySchedule> findAll();
 
-    List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, boolean status);
+    List<DaySchedule> findByWeekScheduleIdAndStatus(Map map);
 
     List<DaySchedule> findByStaffAndWeekSchedule(Map map);
 

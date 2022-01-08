@@ -32,7 +32,7 @@ public class Staff {
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date dateStartWork;
 
-    private boolean gender;
+    private Integer gender;
 
     private String fullName;
 

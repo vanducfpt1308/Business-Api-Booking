@@ -25,6 +25,7 @@ public class BookingDetailController {
                 .build());
 
     }
+
     @PutMapping("/confirm")
     public ResponseEntity<ResponseDTO<?>> confirmBooking(@RequestBody BookingDetail id) {
         id.setStatus(2);

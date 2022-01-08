@@ -98,7 +98,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking create(JsonNode bookingdata) {
         ObjectMapper mapper = new ObjectMapper();
         BookingRequest bookingRequest = mapper.convertValue(bookingdata, BookingRequest.class);
-        bookingRequest.setDateBooking(bookingRequest.getDateBooking()+" 08:30:00");
+        bookingRequest.setDateBooking(bookingRequest.getDateBooking() + " 08:30:00");
         Booking booking = new Booking();
         BookingDetail bookingDetail = new BookingDetail();
         booking.setCustomer(bookingRequest.getCustomer());
@@ -116,8 +116,8 @@ public class BookingServiceImpl implements BookingService {
             bookingDetail.setEmail(bookingRequest.getCustomer().getEmail());
             bookingDetail.setPhone(bookingRequest.getCustomer().getPhone());
             bookingDetail.setDateBooking(date);
-            bookingDetail.setTime_start(bookingRequest.getTimeStart());
-            bookingDetail.setTime_end(bookingRequest.getTimeEnd());
+            bookingDetail.setTimeStart(bookingRequest.getTimeStart());
+            bookingDetail.setTimeEnd(bookingRequest.getTimeEnd());
             bookingDetail.setNote(bookingRequest.getNote());
             bookingDetail.setStaff(bookingRequest.getStaff());
             bookingDetail.setServiceCustomer(bookingRequest.getServiceCustomer());

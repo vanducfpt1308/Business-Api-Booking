@@ -35,11 +35,12 @@ public class DayScheduleController {
     }
 
     @RequestMapping(value = {"/findByWeek"}, method = RequestMethod.POST)
-    public ResponseEntity<?> findByWeek(@RequestBody Integer id) {
+    public ResponseEntity<?> findByWeek(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
         List<DaySchedule> lst = new ArrayList<>();
         try {
-            lst = service.findByWeekScheduleIdAndStatus(id, true);
+            lst = service.findByWeekScheduleIdAndStatus(map);
+            LOGGER.info("getAll :" + map);
         } catch (Exception e) {
             throw e;
         } finally {

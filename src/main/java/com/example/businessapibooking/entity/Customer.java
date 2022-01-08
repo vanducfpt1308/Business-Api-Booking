@@ -24,7 +24,7 @@ public class Customer {
 
     private Integer phone;
 
-    private boolean gender;
+    private Integer gender;
 
     @JsonIgnore
     @OneToOne()

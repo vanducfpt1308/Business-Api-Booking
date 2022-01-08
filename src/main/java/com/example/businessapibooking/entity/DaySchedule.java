@@ -17,9 +17,9 @@ public class DaySchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Time startTime;
+    private String startTime;
 
-    private Time endTime;
+    private String endTime;
 
     private Integer status;
 

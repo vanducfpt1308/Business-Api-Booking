@@ -38,7 +38,7 @@ public class WeekScheduleController {
     }
 
     @RequestMapping(value = {"/findByStaffIdAndStatus"}, method = RequestMethod.POST)
-    public ResponseEntity<?> findByStaff(@RequestBody  Map map) {
+    public ResponseEntity<?> findByStaff(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
         List<WeekSchedule> lst = new ArrayList<>();
         try {
@@ -49,5 +49,32 @@ public class WeekScheduleController {
             LOGGER.info("getAll :" + startTime);
         }
         return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody WeekSchedule obj) {
+        long startTime = System.currentTimeMillis();
+        WeekSchedule schedule = new WeekSchedule();
+        try {
+            schedule = service.save(obj);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(schedule, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
+        long startTime = System.currentTimeMillis();
+        try {
+            service.delete(id);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -22,7 +22,7 @@ public class OrderDetail {
 
     private float price;
 
-    private int quantity;
+    private Integer quantity;
 
     private String images;
 
