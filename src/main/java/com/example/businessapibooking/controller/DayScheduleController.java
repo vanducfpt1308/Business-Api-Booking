@@ -49,6 +49,21 @@ public class DayScheduleController {
         return new ResponseEntity<>(lst, HttpStatus.OK);
     }
 
+    @RequestMapping(value = {"/findByWeekId/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<?> findByWeekId(@PathVariable("id") Integer id) {
+        long startTime = System.currentTimeMillis();
+        List<DaySchedule> lst = new ArrayList<>();
+        try {
+            lst = service.findByWeekScheduleId(id);
+            LOGGER.info("getAll :" + id);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
     @RequestMapping(value = {"/findByStaffIdAndStatus"}, method = RequestMethod.POST)
     public ResponseEntity<?> findByStaff(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
@@ -62,5 +77,49 @@ public class DayScheduleController {
             LOGGER.info("getAll :" + startTime);
         }
         return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody DaySchedule day) {
+        long startTime = System.currentTimeMillis();
+        DaySchedule lst = new DaySchedule();
+        try {
+            lst = service.save(day);
+            LOGGER.info("getAll :" + day);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/update"}, method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestBody DaySchedule day) {
+        long startTime = System.currentTimeMillis();
+        DaySchedule lst = new DaySchedule();
+        try {
+
+            LOGGER.info("getAll :" + day);
+            lst = service.save(day);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.POST)
+    public ResponseEntity<?> delete(@PathVariable("id") Integer key) {
+        long startTime = System.currentTimeMillis();
+        try {
+            service.delete(key);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

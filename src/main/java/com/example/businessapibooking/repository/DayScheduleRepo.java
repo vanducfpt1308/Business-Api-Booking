@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface DayScheduleRepo extends JpaRepository<DaySchedule, Integer> {
 
+    List<DaySchedule> findByWeekScheduleId(Integer id);
+
     @Query("from DaySchedule d where d.weekSchedule.id= :id and d.status = :status")
     List<DaySchedule> findByWeekScheduleIdAndStatus(Integer id, Integer status);
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,6 +34,19 @@ public class StaffController {
         }
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
+    @RequestMapping(value = {"/findByRole"}, method = RequestMethod.POST)
+    public ResponseEntity<?> findByRole(@RequestBody Map map) {
+        long startTime = System.currentTimeMillis();
+        List<Staff> listStaff = new ArrayList<>();
+        try {
+            listStaff = service.findByRole(map);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(listStaff, HttpStatus.OK);
+    }
 
     @RequestMapping(value = {"/findByUserRole"}, method = RequestMethod.POST)
     public ResponseEntity<?> findByUserRole(@RequestBody Integer role) {
@@ -47,6 +61,7 @@ public class StaffController {
         }
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
+
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
         long startTime = System.currentTimeMillis();

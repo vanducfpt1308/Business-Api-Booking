@@ -3,6 +3,8 @@ package com.example.businessapibooking.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.example.businessapibooking.config.Constants;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Time;
@@ -24,6 +26,8 @@ public class DaySchedule {
     private Integer status;
 
     @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name = "week_schedule_id")
     private WeekSchedule weekSchedule;
 }

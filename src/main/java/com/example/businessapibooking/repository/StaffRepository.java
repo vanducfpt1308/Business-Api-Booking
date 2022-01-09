@@ -12,4 +12,7 @@ import java.util.List;
 public interface StaffRepository extends JpaRepository<Staff, Integer> {
     @Query("from Staff s where s.user.role.id = :role")
     List<Staff> findByUserRole(Integer role);
+
+    @Query("from Staff s where s.user.role.role = :role")
+    List<Staff> findByRole(String role);
 }

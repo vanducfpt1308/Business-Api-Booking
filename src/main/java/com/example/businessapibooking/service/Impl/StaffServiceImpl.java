@@ -10,13 +10,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StaffServiceImpl implements StaffService {
     public static final Logger LOGGER = LoggerFactory.getLogger(StaffServiceImpl.class);
     @Autowired
     StaffRepository staffRepository;
+
+    @Override
+    public List<Staff> findByRole(Map map) {
+        List<Staff> lst = new ArrayList<>();
+        if (map != null) {
+            String role = (String) map.get("ROLE");
+            lst = staffRepository.findByRole(role);
+        }
+        return lst;
+    }
 
     @Override
     public List<Staff> findByUserRole(Integer role) {

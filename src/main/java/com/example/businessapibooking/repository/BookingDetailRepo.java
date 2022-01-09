@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookingDetailRepo extends JpaRepository<BookingDetail,Integer> {
-     @Query("SELECT u FROM BookingDetail u WHERE u.status = :stt")
-     List<BookingDetail> findByStatus(Integer stt);
+public interface BookingDetailRepo extends JpaRepository<BookingDetail, Integer> {
+    @Query("SELECT u FROM BookingDetail u WHERE u.status = :stt")
+    List<BookingDetail> findByStatus(Integer stt);
+
+    @Query("SELECT b FROM BookingDetail b WHERE b.booking.customer.id = :id and b.status = :stt")
+    List<BookingDetail> findByCustomerAndStatus(Integer id, Integer stt);
 }
