@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import javax.persistence.OrderBy;
 import java.util.List;
+import java.util.Map;
 
 
 public interface StaffService {
@@ -15,7 +16,7 @@ public interface StaffService {
 
     List<Staff> findAll(List<Integer> ids);
 
-    List<Staff> findByUserRole(Integer role);
+    List<Staff> findByUserRole(Map map);
 
     Staff save(Staff obj);
 

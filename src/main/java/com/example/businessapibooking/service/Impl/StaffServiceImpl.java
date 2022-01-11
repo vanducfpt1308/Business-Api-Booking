@@ -1,5 +1,6 @@
 package com.example.businessapibooking.service.Impl;
 
+import com.example.businessapibooking.entity.DaySchedule;
 import com.example.businessapibooking.entity.Staff;
 import com.example.businessapibooking.repository.StaffRepository;
 import com.example.businessapibooking.service.StaffService;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.OrderBy;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -19,8 +22,14 @@ public class StaffServiceImpl implements StaffService {
     StaffRepository staffRepository;
 
     @Override
-    public List<Staff> findByUserRole(Integer role) {
-        return staffRepository.findByUserRole(role);
+    public List<Staff> findByUserRole(Map map) {
+        List<Staff> lst = new ArrayList<>();
+        if (map != null) {
+            String role = (String) map.get("ROLE");
+            lst = staffRepository.findByUserRole(role);
+        }
+        return lst;
+
     }
 
     @Override
