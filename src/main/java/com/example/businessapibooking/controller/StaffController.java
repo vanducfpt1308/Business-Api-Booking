@@ -110,9 +110,9 @@ public class StaffController {
                 staff.setFullName(registerRequest.getFullName());
                 staff.setPhoneNumber(registerRequest.getPhone());
                 staff.setGender(registerRequest.getGender());
-                staff.setDateStartWork(registerRequest.getDateStartWork());
+//                staff.setDateStartWork(registerRequest.getDateStartWork());
                 staff.setAcademicLevel(registerRequest.getAcademicLevel());
-                staff.setDescription(registerRequest.getDescription());
+//                staff.setDescription(registerRequest.getDescription());
                 staff.setPhoto(registerRequest.getPhoto());
 
                 staffRepository.save(staff);
@@ -123,6 +123,40 @@ public class StaffController {
         } finally {
             LOGGER.info("register :" + startTime);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(staff,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/registerStaff"}, method = RequestMethod.POST)
+    public ResponseEntity<?> registerStaff(@RequestBody RegisterStaffRequest registerRequest) {
+        long startTime = System.currentTimeMillis();
+        Staff staff = new Staff();
+        Role role = roleRepo.findByRole("STAFF");
+        Users user = new Users();
+        try {
+            if (registerRequest != null) {
+                user.setPassword(HashUtil.hash(registerRequest.getPassword()));
+                user.setUsername(registerRequest.getUsername());
+                user.setRole(role);
+                userRepo.save(user);
+
+                staff.setEmail(registerRequest.getEmail());
+                staff.setUser(user);
+                staff.setFullName(registerRequest.getFullName());
+                staff.setPhoneNumber(registerRequest.getPhone());
+                staff.setGender(registerRequest.getGender());
+//                staff.setDateStartWork(registerRequest.getDateStartWork());
+                staff.setAcademicLevel(registerRequest.getAcademicLevel());
+//                staff.setDescription(registerRequest.getDescription());
+                staff.setPhoto(registerRequest.getPhoto());
+
+                staffRepository.save(staff);
+            }
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("register :" + startTime);
+        }
+        return new ResponseEntity<>(staff,HttpStatus.OK);
     }
 }

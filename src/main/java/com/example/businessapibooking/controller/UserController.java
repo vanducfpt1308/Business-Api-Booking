@@ -1,6 +1,7 @@
 package com.example.businessapibooking.controller;
 
 
+import com.example.businessapibooking.dto.PasswordDTO;
 import com.example.businessapibooking.dto.RegisterRequest;
 import com.example.businessapibooking.entity.*;
 import com.example.businessapibooking.repository.CustomerRepo;
@@ -24,6 +25,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,5 +105,13 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePass(@RequestBody @Valid PasswordDTO dto){
+        return null;
+
+    }
+
+
 
 }
