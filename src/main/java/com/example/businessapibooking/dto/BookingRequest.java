@@ -24,4 +24,5 @@ public class BookingRequest {
     private String timeEnd;
     private String timeStart;
     private String note;
+    private Integer dayScheduleId;
 }

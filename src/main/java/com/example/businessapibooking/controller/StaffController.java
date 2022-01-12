@@ -34,6 +34,7 @@ public class StaffController {
         }
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
+
     @RequestMapping(value = {"/findByRole"}, method = RequestMethod.POST)
     public ResponseEntity<?> findByRole(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
@@ -68,6 +69,20 @@ public class StaffController {
         Staff staff = new Staff();
         try {
             staff = service.findById(id);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(staff, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
+    public ResponseEntity<?> save(@RequestBody Staff staff) {
+        long startTime = System.currentTimeMillis();
+
+        try {
+            service.save(staff);
         } catch (Exception ex) {
             throw ex;
         } finally {

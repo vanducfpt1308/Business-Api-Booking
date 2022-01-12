@@ -121,6 +121,7 @@ public class BookingServiceImpl implements BookingService {
             bookingDetail.setNote(bookingRequest.getNote());
             bookingDetail.setStaff(bookingRequest.getStaff());
             bookingDetail.setServiceCustomer(bookingRequest.getServiceCustomer());
+            bookingDetail.setDayScheduleId(bookingRequest.getDayScheduleId());
             bookingDetailRepo.save(bookingDetail);
         }
         return booking;

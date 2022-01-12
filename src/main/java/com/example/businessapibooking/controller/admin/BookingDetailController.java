@@ -3,8 +3,11 @@ package com.example.businessapibooking.controller.admin;
 import com.example.businessapibooking.common.ResponeCustom;
 import com.example.businessapibooking.dto.ResponseDTO;
 import com.example.businessapibooking.entity.BookingDetail;
+import com.example.businessapibooking.entity.DaySchedule;
 import com.example.businessapibooking.entity.Staff;
 import com.example.businessapibooking.service.BookingDetailService;
+import com.example.businessapibooking.service.DayScheduleService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/auth/admin")
-@CrossOrigin(origins = "*")
 public class BookingDetailController {
     public static final Logger LOGGER = LoggerFactory.getLogger(BookingDetailController.class);
     @Autowired
     BookingDetailService bookingDetailService;
+
+    @Autowired
+    DayScheduleService dayScheduleService;
 
     // select lich kham stt
     @GetMapping("/allbooking/{stt}")
@@ -49,16 +54,34 @@ public class BookingDetailController {
         return new ResponseEntity<>(lst, HttpStatus.OK);
     }
 
+    @RequestMapping(value = {"/updateBookingDetail"}, method = RequestMethod.PUT)
+    public ResponseEntity<?> updateBookingDetail(@RequestBody BookingDetail detail) {
+        long startTime = System.currentTimeMillis();
+        BookingDetail obj = new BookingDetail();
+
+        try {
+            LOGGER.info("update :" + detail);
+            obj = bookingDetailService.save(detail);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+
     @PutMapping("/confirm")
-    public ResponseEntity<ResponseDTO<?>> confirmBooking(@RequestBody BookingDetail id) {
-        id.setStatus(2);
-        bookingDetailService.save(id);
+    public ResponseEntity<ResponseDTO<?>> confirmBooking(@RequestBody BookingDetail detail) {
+        detail.setStatus(2);
+        DaySchedule daySchedule = dayScheduleService.findById(detail.getDayScheduleId());
+        daySchedule.setStatus(0);
+        dayScheduleService.save(daySchedule);
+        bookingDetailService.save(detail);
         return ResponseEntity.ok(ResponseDTO.builder()
                 .messageCode(ResponeCustom.MESSAGE_CODE_SUCCESS)
                 .messageName(ResponeCustom.MESSAGE_NAME_SUCCESS)
-                .data(id).build());
+                .data(detail).build());
     }
-
 
     //huy lich kham
     @PutMapping("/cancel/{id}")

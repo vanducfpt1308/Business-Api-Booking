@@ -27,6 +27,8 @@ public class BookingDetail {
 
     private String timeEnd;
 
+    private Integer dayScheduleId;
+
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE)
     private Date dateBooking;
 
