@@ -61,7 +61,7 @@ public class UserController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         Users user = userRepo.findByUsername(userDTO.getUsername());
         UserDTO u = new UserDTO();
-        if (user.getRole().getRole().equalsIgnoreCase("user")) {
+        if (user.getRole().getRole().equalsIgnoreCase("user") && user.isLocked()) {
             u.setToken(token);
             u.setFullName(user.getCustomer().getFullName());
             u.setUsername(user.getUsername());
@@ -89,6 +89,8 @@ public class UserController {
                 user.setPassword(HashUtil.hash(registerRequest.getPassword()));
                 user.setUsername(registerRequest.getUsername());
                 user.setRole(role);
+                user.setEnable(true);
+                user.setLocked(false);
                 userRepo.save(user);
 
                 customer.setEmail(registerRequest.getEmail());
@@ -109,9 +111,5 @@ public class UserController {
     @PostMapping("/changePassword")
     public ResponseEntity<?> changePass(@RequestBody @Valid PasswordDTO dto){
         return null;
-
     }
-
-
-
 }
