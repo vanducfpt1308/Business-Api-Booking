@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,17 @@ import java.util.Map;
 public class BookingDetailServiceImpl implements BookingDetailService {
     @Autowired
     BookingDetailRepo bookingDetailRepo;
+
+    @Override
+    public List<BookingDetail> findByDateBookingAndStatus(Map map) {
+        List<BookingDetail> lst = new ArrayList<>();
+        if (map != null) {
+            Date date = (Date) map.get("BOOKING_DATE");
+            Integer status = (Integer) map.get("STATUS");
+            lst = bookingDetailRepo.findByDateBookingAndStatus(date, status);
+        }
+        return lst;
+    }
 
     @Override
     public List<BookingDetail> findByCustomerAndStatus(Map map) {

@@ -18,6 +18,6 @@ public class UserDTO {
     private String fullName;
     private String address;
     private Integer phone;
-    private boolean isInsured;
+    private boolean isLocked;
     private String gender;
 }

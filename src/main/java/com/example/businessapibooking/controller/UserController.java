@@ -67,8 +67,10 @@ public class UserController {
             u.setUsername(user.getUsername());
             u.setRole(user.getRole().getRole());
             u.setId(user.getCustomer().getId());
+            u.setLocked(user.isLocked());
             LOGGER.info("user:" + u);
         } else {
+            u.setLocked(user.isLocked());
             u.setToken(token);
             u.setRole(user.getRole().getRole());
             u.setUsername(user.getUsername());

@@ -1,6 +1,7 @@
 package com.example.businessapibooking.controller.admin;
 
 import com.example.businessapibooking.common.ResponeCustom;
+import com.example.businessapibooking.dto.ActionReceive;
 import com.example.businessapibooking.dto.ResponseDTO;
 import com.example.businessapibooking.entity.BookingDetail;
 import com.example.businessapibooking.entity.DaySchedule;
@@ -53,6 +54,19 @@ public class BookingDetailController {
         }
         return new ResponseEntity<>(lst, HttpStatus.OK);
     }
+    @RequestMapping(value = {"/searchByDate"}, method = RequestMethod.POST)
+    public ResponseEntity<?> findByDateBookingAndStatus(@RequestBody Map map) {
+        long startTime = System.currentTimeMillis();
+        List<BookingDetail> lst = new ArrayList<>();
+        try {
+            lst = bookingDetailService.findByDateBookingAndStatus(map);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
+    }
 
     @RequestMapping(value = {"/updateBookingDetail"}, method = RequestMethod.PUT)
     public ResponseEntity<?> updateBookingDetail(@RequestBody BookingDetail detail) {
@@ -68,6 +82,36 @@ public class BookingDetailController {
             LOGGER.info("getAll :" + startTime);
         }
         return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+    @RequestMapping(value = {"/updateStatus"}, method = RequestMethod.PUT)
+    public ResponseEntity<?> updateStatus(@RequestBody ActionReceive action) {
+        long startTime = System.currentTimeMillis();
+        BookingDetail obj = action.getBookingDetail();
+          obj.setStatus(action.getStatus());
+        try {
+
+            obj = bookingDetailService.save(obj);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+    @RequestMapping(value = {"/searchByDoctor"}, method = RequestMethod.PUT)
+    public ResponseEntity<?> searchByDateBooking(@RequestBody Map map) {
+        long startTime = System.currentTimeMillis();
+        List<BookingDetail> lst = new ArrayList<>();
+
+        try {
+
+            //lst = bookingDetailService.save(obj);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(lst, HttpStatus.OK);
     }
 
     @PutMapping("/confirm")
