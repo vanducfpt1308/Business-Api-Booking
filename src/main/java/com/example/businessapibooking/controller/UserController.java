@@ -61,16 +61,14 @@ public class UserController {
         final String token = jwtTokenUtil.generateToken(userDetails);
         Users user = userRepo.findByUsername(userDTO.getUsername());
         UserDTO u = new UserDTO();
-        if (user.getRole().getRole().equalsIgnoreCase("user") && user.isLocked()) {
+        if (user.getRole().getRole().equalsIgnoreCase("user")) {
             u.setToken(token);
             u.setFullName(user.getCustomer().getFullName());
             u.setUsername(user.getUsername());
             u.setRole(user.getRole().getRole());
             u.setId(user.getCustomer().getId());
-            u.setLocked(user.isLocked());
             LOGGER.info("user:" + u);
         } else {
-            u.setLocked(user.isLocked());
             u.setToken(token);
             u.setRole(user.getRole().getRole());
             u.setUsername(user.getUsername());
@@ -91,8 +89,6 @@ public class UserController {
                 user.setPassword(HashUtil.hash(registerRequest.getPassword()));
                 user.setUsername(registerRequest.getUsername());
                 user.setRole(role);
-                user.setEnable(true);
-                user.setLocked(false);
                 userRepo.save(user);
 
                 customer.setEmail(registerRequest.getEmail());
@@ -110,8 +106,34 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/changePassword")
-    public ResponseEntity<?> changePass(@RequestBody @Valid PasswordDTO dto){
-        return null;
+    @PostMapping("/auth/changePassword")
+    public int changePass(@RequestBody PasswordDTO passwordDTO){
+
+        //Nhận vào email đang đăng nhập ở clien
+        //return 1: user không tồn tại
+        //return 2: pw sai
+        //return 3: lưu pw mới bị lỗi
+        //4: pw cũ trùng pw mới
+        boolean checkPwd = false;
+        Users users = userRepo.finById(passwordDTO.getUserName());
+        if(passwordDTO.getNewPassword().equalsIgnoreCase(passwordDTO.getOldPassword())) return 4;
+        if(users == null){
+            return 1;
+        }else {
+            checkPwd = HashUtil.verifile(passwordDTO.getOldPassword(), users.getPassword());
+            if(!checkPwd) return 2;
+        }
+        users.setPassword(HashUtil.hash(passwordDTO.getNewPassword()));
+        try {
+            userRepo.save(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Lưu mật khẩu không thành công !!!");
+            return 3;
+        }
+        return 0;
     }
+
+
+
 }
