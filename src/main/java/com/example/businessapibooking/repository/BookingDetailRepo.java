@@ -20,4 +20,9 @@ public interface BookingDetailRepo extends JpaRepository<BookingDetail, Integer>
             "and YEAR(bk.dateBooking)=2021\n" +
             "and bk.status = 2")
     public Integer countBookingMonth(@Param("month") Integer month);
+
+    @Query("SELECT COUNT(bk.id) from BookingDetail bk where MONTH(bk.dateBooking) = :month\n" +
+            "and YEAR(bk.dateBooking)=2021\n" +
+            "and bk.status = 3")
+    public Integer countCancelBookingMonth(@Param("month") Integer month);
 }

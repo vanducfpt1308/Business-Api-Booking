@@ -23,4 +23,11 @@ public class StatisticalController {
         return ResponseEntity.ok(statisticalService.countBooking());
     }
 
+    //thống kê số lượng theo tháng stt = 3
+    //huỷ lịch
+    @GetMapping("/statisticalCancel")
+    public ResponseEntity<StatisticalDTO> statisticalCancelBooking(){
+        return ResponseEntity.ok(statisticalService.countCancelBooking());
+    }
+
 }

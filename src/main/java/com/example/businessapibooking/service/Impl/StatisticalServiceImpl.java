@@ -29,4 +29,22 @@ public class StatisticalServiceImpl implements StatisticalService {
         dto.setThang12(bookingDetailRepo.countBookingMonth(12));
         return dto;
     }
+
+    @Override
+    public StatisticalDTO countCancelBooking() {
+        StatisticalDTO dto = new StatisticalDTO();
+        dto.setThang1(bookingDetailRepo.countCancelBookingMonth(1));
+        dto.setThang2(bookingDetailRepo.countCancelBookingMonth(2));
+        dto.setThang3(bookingDetailRepo.countCancelBookingMonth(3));
+        dto.setThang4(bookingDetailRepo.countCancelBookingMonth(4));
+        dto.setThang5(bookingDetailRepo.countCancelBookingMonth(5));
+        dto.setThang6(bookingDetailRepo.countCancelBookingMonth(6));
+        dto.setThang7(bookingDetailRepo.countCancelBookingMonth(7));
+        dto.setThang8(bookingDetailRepo.countCancelBookingMonth(8));
+        dto.setThang9(bookingDetailRepo.countCancelBookingMonth(9));
+        dto.setThang10(bookingDetailRepo.countCancelBookingMonth(10));
+        dto.setThang11(bookingDetailRepo.countCancelBookingMonth(11));
+        dto.setThang12(bookingDetailRepo.countCancelBookingMonth(12));
+        return dto;
+    }
 }
