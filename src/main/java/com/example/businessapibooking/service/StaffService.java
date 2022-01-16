@@ -18,6 +18,8 @@ public interface StaffService {
 
     List<Staff> findByUserRole(Integer role);
 
+    List<Staff> findByNameAndRole(Map map);
+
     List<Staff> findByRole(Map map);
 
     Staff save(Staff obj);

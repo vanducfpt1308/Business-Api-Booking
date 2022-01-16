@@ -15,4 +15,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
     @Query("from Staff s where s.user.role.role = :role")
     List<Staff> findByRole(String role);
+
+    @Query("from Staff s where s.fullName LIKE %:name% and s.user.role.role = :role")
+    List<Staff> findByNameAndRole(String name ,String role);
 }

@@ -21,13 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/")
@@ -83,31 +78,32 @@ public class UserController {
         long startTime = System.currentTimeMillis();
         Customer customer = new Customer();
         Role role = roleRepo.findByRole("USER");
-        Users user = new Users();
-        try {
-            if (registerRequest != null) {
-                user.setPassword(HashUtil.hash(registerRequest.getPassword()));
-                user.setUsername(registerRequest.getUsername());
-                user.setRole(role);
-                userRepo.save(user);
-
+        Users user = userRepo.findByUsername(registerRequest.getUsername());
+        Users u = new Users();
+        if (registerRequest != null && user == null) {
+            try {
+                u.setPassword(HashUtil.hash(registerRequest.getPassword()));
+                u.setUsername(registerRequest.getUsername());
+                u.setRole(role);
+                userRepo.save(u);
                 customer.setEmail(registerRequest.getEmail());
-                customer.setUser(user);
+                customer.setUser(u);
                 customer.setFullName(registerRequest.getFullName());
                 customer.setPhone(registerRequest.getPhone());
                 customerRepo.save(customer);
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                LOGGER.info("register :" + startTime);
             }
-
-        } catch (Exception ex) {
-            throw ex;
-        } finally {
-            LOGGER.info("register :" + startTime);
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(customer, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/auth/changePassword")
-    public int changePass(@RequestBody PasswordDTO passwordDTO){
+    public int changePass(@RequestBody PasswordDTO passwordDTO) {
 
         //Nhận vào email đang đăng nhập ở clien
         //return 1: user không tồn tại
@@ -116,24 +112,36 @@ public class UserController {
         //4: pw cũ trùng pw mới
         boolean checkPwd = false;
         Users users = userRepo.finById(passwordDTO.getUserName());
-        if(passwordDTO.getNewPassword().equalsIgnoreCase(passwordDTO.getOldPassword())) return 4;
-        if(users == null){
+        if (passwordDTO.getNewPassword().equalsIgnoreCase(passwordDTO.getOldPassword())) return 4;
+        if (users == null) {
             return 1;
-        }else {
+        } else {
             checkPwd = HashUtil.verifile(passwordDTO.getOldPassword(), users.getPassword());
-            if(!checkPwd) return 2;
+            if (!checkPwd) return 2;
         }
         users.setPassword(HashUtil.hash(passwordDTO.getNewPassword()));
         try {
             userRepo.save(users);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Lưu mật khẩu không thành công !!!");
+            LOGGER.info("Lưu mật khẩu không thành công !!!");
             return 3;
         }
         return 0;
     }
 
-
+    @RequestMapping(value = {"/auth/locked"}, method = RequestMethod.PUT)
+    public int locked(@RequestBody Users user) {
+        long startTime = System.currentTimeMillis();
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.info("locked !!!");
+        } finally {
+            LOGGER.info("locked :" + startTime);
+        }
+        return 0;
+    }
 
 }

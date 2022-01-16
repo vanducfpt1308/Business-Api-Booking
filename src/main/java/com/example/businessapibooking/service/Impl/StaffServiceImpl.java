@@ -21,6 +21,17 @@ public class StaffServiceImpl implements StaffService {
     StaffRepository staffRepository;
 
     @Override
+    public List<Staff> findByNameAndRole(Map map) {
+        List<Staff> lst = new ArrayList<>();
+        if (map != null) {
+            String name = (String) map.get("NAME");
+            String role = (String) map.get("ROLE");
+            lst = staffRepository.findByNameAndRole(name, role);
+        }
+        return lst;
+    }
+
+    @Override
     public List<Staff> findByRole(Map map) {
         List<Staff> lst = new ArrayList<>();
         if (map != null) {

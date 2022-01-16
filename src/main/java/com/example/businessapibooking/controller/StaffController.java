@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ public class StaffController {
         }
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
+
     @RequestMapping(value = {"/findByRole"}, method = RequestMethod.POST)
     public ResponseEntity<?> findByRole(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
@@ -78,6 +80,20 @@ public class StaffController {
         return new ResponseEntity<>(listStaff, HttpStatus.OK);
     }
 
+    @RequestMapping(value = {"/findByNameAndRole"}, method = RequestMethod.POST)
+    public ResponseEntity<?> findByNameAndRole(@RequestBody Map map) {
+        long startTime = System.currentTimeMillis();
+        List<Staff> listStaff = new ArrayList<>();
+        try {
+            listStaff = service.findByNameAndRole(map);
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            LOGGER.info("getAll :" + startTime);
+        }
+        return new ResponseEntity<>(listStaff, HttpStatus.OK);
+    }
+
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable("id") Integer id) {
         long startTime = System.currentTimeMillis();
@@ -98,8 +114,10 @@ public class StaffController {
         Staff staff = new Staff();
         Role role = roleRepo.findByRole("DOCTOR");
         Users user = new Users();
-        try {
-            if (registerRequest != null) {
+        Users u = userRepo.findByUsername(registerRequest.getUsername());
+
+        if (registerRequest != null && u == null) {
+            try {
                 user.setPassword(HashUtil.hash(registerRequest.getPassword()));
                 user.setUsername(registerRequest.getUsername());
                 user.setRole(role);
@@ -110,20 +128,21 @@ public class StaffController {
                 staff.setFullName(registerRequest.getFullName());
                 staff.setPhoneNumber(registerRequest.getPhone());
                 staff.setGender(registerRequest.getGender());
-//                staff.setDateStartWork(registerRequest.getDateStartWork());
+                staff.setDateStartWork(new Date());
                 staff.setAcademicLevel(registerRequest.getAcademicLevel());
-//                staff.setDescription(registerRequest.getDescription());
+                staff.setDescription(registerRequest.getDescription());
                 staff.setPhoto(registerRequest.getPhoto());
-
+                staff.setWorkExperience(registerRequest.getWorkExperience());
                 staffRepository.save(staff);
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                LOGGER.info("register :" + startTime);
             }
-
-        } catch (Exception ex) {
-            throw ex;
-        } finally {
-            LOGGER.info("register :" + startTime);
+            return new ResponseEntity<>(staff, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(staff, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(staff,HttpStatus.OK);
     }
 
     @RequestMapping(value = {"/registerStaff"}, method = RequestMethod.POST)
@@ -132,8 +151,10 @@ public class StaffController {
         Staff staff = new Staff();
         Role role = roleRepo.findByRole("STAFF");
         Users user = new Users();
-        try {
-            if (registerRequest != null) {
+        Users u = userRepo.findByUsername(registerRequest.getUsername());
+
+        if (registerRequest != null && u == null) {
+            try {
                 user.setPassword(HashUtil.hash(registerRequest.getPassword()));
                 user.setUsername(registerRequest.getUsername());
                 user.setRole(role);
@@ -144,19 +165,18 @@ public class StaffController {
                 staff.setFullName(registerRequest.getFullName());
                 staff.setPhoneNumber(registerRequest.getPhone());
                 staff.setGender(registerRequest.getGender());
-//                staff.setDateStartWork(registerRequest.getDateStartWork());
-                staff.setAcademicLevel(registerRequest.getAcademicLevel());
-//                staff.setDescription(registerRequest.getDescription());
+                staff.setDateStartWork(new Date());
                 staff.setPhoto(registerRequest.getPhoto());
 
                 staffRepository.save(staff);
+            } catch (Exception ex) {
+                throw ex;
+            } finally {
+                LOGGER.info("register :" + startTime);
             }
-
-        } catch (Exception ex) {
-            throw ex;
-        } finally {
-            LOGGER.info("register :" + startTime);
+            return new ResponseEntity<>(staff, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(staff, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(staff,HttpStatus.OK);
     }
 }
