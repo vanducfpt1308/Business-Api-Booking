@@ -16,9 +16,8 @@ public interface BookingDetailRepo extends JpaRepository<BookingDetail, Integer>
     @Query("SELECT b FROM BookingDetail b WHERE b.booking.customer.id = :id and b.status = :stt")
     List<BookingDetail> findByCustomerAndStatus(Integer id, Integer stt);
 
-    @Query("select COUNT(id) as quantily from booking_details bk \n" +
-            "where MONTH(bk.date_booking) = :month\n" +
-            "and YEAR(bk.date_booking)=2021\n" +
-            "and status = 2")
-    Integer countBookingMonth(@Param("month") Integer month);
+    @Query("SELECT COUNT(bk.id) from BookingDetail bk where MONTH(bk.dateBooking) = :month\n" +
+            "and YEAR(bk.dateBooking)=2021\n" +
+            "and bk.status = 2")
+    public Integer countBookingMonth(@Param("month") Integer month);
 }

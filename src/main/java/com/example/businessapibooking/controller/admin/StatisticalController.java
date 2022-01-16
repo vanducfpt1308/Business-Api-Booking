@@ -18,7 +18,7 @@ public class StatisticalController {
 
     //thống kê số lượng theo tháng stt = 2
     //đã xác nhận
-    @GetMapping("statistical")
+    @GetMapping("/statistical")
     public ResponseEntity<StatisticalDTO> statisticalBooking(){
         return ResponseEntity.ok(statisticalService.countBooking());
     }
