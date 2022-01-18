@@ -17,5 +17,7 @@ public class SearchDTO {
 
     @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
     private Date date;
+    @JsonFormat(pattern = Constants.DATE_FORMAT.DATE_TIME)
+    private Date dateEnd;
     private Integer status;
 }

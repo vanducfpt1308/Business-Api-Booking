@@ -35,15 +35,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     public List<BookingDetail> findByDateBookingAndStatus(SearchDTO map) {
         List<BookingDetail> lst = new ArrayList<>();
         if (map != null) {
-//            String toDate = map.get("BOOKING_DATE")+" 08:30:00";
-//            Date date = null;
-//            try {
-//                date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(toDate);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            Integer status = (Integer) map.get("STATUS");
-            lst = bookingDetailRepo.findByDateBookingAndStatus(map.getDate(), map.getStatus());
+            lst = bookingDetailRepo.findByDateBookingAndStatus(map.getDate(), map.getDateEnd(), map.getStatus());
         }
         return lst;
     }
