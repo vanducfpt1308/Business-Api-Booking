@@ -1,5 +1,6 @@
 package com.example.businessapibooking.service;
 
+import com.example.businessapibooking.dto.SearchDTO;
 import com.example.businessapibooking.entity.BookingDetail;
 
 import java.util.Date;
@@ -15,5 +16,7 @@ public interface BookingDetailService {
 
     List<BookingDetail> findByCustomerAndStatus(Map map);
 
-    List<BookingDetail> findByDateBookingAndStatus(Map map);
+    List<BookingDetail> findByDateBookingAndStatus(SearchDTO value );
+
+    List<BookingDetail> findByDoctorAndStatus(Map map);
 }

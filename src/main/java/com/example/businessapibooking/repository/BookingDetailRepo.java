@@ -22,7 +22,7 @@ public interface BookingDetailRepo extends JpaRepository<BookingDetail, Integer>
 
     @Query("SELECT b FROM BookingDetail b WHERE b.staff.id = :id and b.status = :stt")
     List<BookingDetail> findByDoctor(Integer id, Integer stt);
-    
+
     @Query("SELECT COUNT(bk.id) from BookingDetail bk where MONTH(bk.dateBooking) = :month\n" +
             "and YEAR(bk.dateBooking)=2021\n" +
             "and bk.status = 2")

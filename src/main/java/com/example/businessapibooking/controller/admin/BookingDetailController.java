@@ -3,6 +3,7 @@ package com.example.businessapibooking.controller.admin;
 import com.example.businessapibooking.common.ResponeCustom;
 import com.example.businessapibooking.dto.ActionReceive;
 import com.example.businessapibooking.dto.ResponseDTO;
+import com.example.businessapibooking.dto.SearchDTO;
 import com.example.businessapibooking.entity.BookingDetail;
 import com.example.businessapibooking.entity.DaySchedule;
 import com.example.businessapibooking.entity.Staff;
@@ -54,12 +55,13 @@ public class BookingDetailController {
         }
         return new ResponseEntity<>(lst, HttpStatus.OK);
     }
+
     @RequestMapping(value = {"/searchByDate"}, method = RequestMethod.POST)
-    public ResponseEntity<?> findByDateBookingAndStatus(@RequestBody Map map) {
+    public ResponseEntity<?> findByDateBookingAndStatus(@RequestBody SearchDTO value) {
         long startTime = System.currentTimeMillis();
         List<BookingDetail> lst = new ArrayList<>();
         try {
-            lst = bookingDetailService.findByDateBookingAndStatus(map);
+            lst = bookingDetailService.findByDateBookingAndStatus(value);
         } catch (Exception ex) {
             throw ex;
         } finally {
@@ -83,11 +85,12 @@ public class BookingDetailController {
         }
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
+
     @RequestMapping(value = {"/updateStatus"}, method = RequestMethod.PUT)
     public ResponseEntity<?> updateStatus(@RequestBody ActionReceive action) {
         long startTime = System.currentTimeMillis();
         BookingDetail obj = action.getBookingDetail();
-          obj.setStatus(action.getStatus());
+        obj.setStatus(action.getStatus());
         try {
 
             obj = bookingDetailService.save(obj);
@@ -98,14 +101,13 @@ public class BookingDetailController {
         }
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
-    @RequestMapping(value = {"/searchByDoctor"}, method = RequestMethod.PUT)
+
+    @RequestMapping(value = {"/searchByDoctor"}, method = RequestMethod.POST)
     public ResponseEntity<?> searchByDateBooking(@RequestBody Map map) {
         long startTime = System.currentTimeMillis();
         List<BookingDetail> lst = new ArrayList<>();
-
         try {
-
-            //lst = bookingDetailService.save(obj);
+            lst = bookingDetailService.findByDoctorAndStatus(map);
         } catch (Exception ex) {
             throw ex;
         } finally {
