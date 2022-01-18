@@ -8,6 +8,7 @@ import com.example.businessapibooking.repository.StaffRepository;
 import com.example.businessapibooking.entity.Booking;
 import com.example.businessapibooking.repository.BookingRepository;
 import com.example.businessapibooking.service.BookingService;
+import com.example.businessapibooking.utils.SendMail;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     ServiceCustumerRepo serviceCustumerRepo;
+
+    private SendMail sendMail;
 
     @Override
     public List<Booking> findByCustomer(Integer key) {
@@ -123,6 +126,14 @@ public class BookingServiceImpl implements BookingService {
             bookingDetail.setServiceCustomer(bookingRequest.getServiceCustomer());
             bookingDetail.setDayScheduleId(bookingRequest.getDayScheduleId());
             bookingDetailRepo.save(bookingDetail);
+            sendMail.sendMailSender(bookingRequest.getCustomer().getEmail(),
+                    "Cảm ơn bạn đã đặt lịch khám mắt tại hệ thống của phòng khám mắt Mỹ Đình" +
+                            " Thông tin cho cuộc hẹn đã đặt:" +
+                            " Thời gian:" + bookingRequest.getTimeStart() +":"+ bookingRequest.getTimeEnd() +
+                            " Ngày:" + date,
+
+                    "Email thông báo về lịch khám mắt");
+
         }
         return booking;
     }
