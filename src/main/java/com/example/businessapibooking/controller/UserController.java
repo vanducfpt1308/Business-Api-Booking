@@ -111,8 +111,10 @@ public class UserController {
         //return 3: lưu pw mới bị lỗi
         //4: pw cũ trùng pw mới
         boolean checkPwd = false;
-        Users users = userRepo.finById(passwordDTO.getUserName());
-        if (passwordDTO.getNewPassword().equalsIgnoreCase(passwordDTO.getOldPassword())) return 4;
+        Users users = userRepo.findByUsername(passwordDTO.getUserName());
+        if (passwordDTO.getNewPassword().equalsIgnoreCase(passwordDTO.getOldPassword())) {
+            return 4;
+        } ;
         if (users == null) {
             return 1;
         } else {
